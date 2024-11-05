@@ -14,18 +14,7 @@ paths:
       description: 权限等级0
       tags:
         - 权限等级-0
-      parameters:
-        - name: Authorization
-          in: header
-          description: ''
-          example: >-
-            Bearer
-            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2lvbiI6MiwiZXhwIjoxNzMwNzkxNTIyfQ.qifZf7X06lUrZpzijt1GfPyg9s9Y72M4RYZPslOJVX8
-          schema:
-            type: string
-            default: >-
-              Bearer
-              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2lvbiI6MiwiZXhwIjoxNzMwNzkxNTIyfQ.qifZf7X06lUrZpzijt1GfPyg9s9Y72M4RYZPslOJVX8
+      parameters: []
       requestBody:
         content:
           multipart/form-data:
@@ -550,18 +539,7 @@ paths:
       description: ''
       tags:
         - 权限等级-0
-      parameters:
-        - name: Authorization
-          in: header
-          description: ''
-          example: >-
-            Bearer
-            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2lvbiI6MiwiZXhwIjoxNzMwNzkxNTIyfQ.qifZf7X06lUrZpzijt1GfPyg9s9Y72M4RYZPslOJVX8
-          schema:
-            type: string
-            default: >-
-              Bearer
-              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2lvbiI6MiwiZXhwIjoxNzMwNzkxNTIyfQ.qifZf7X06lUrZpzijt1GfPyg9s9Y72M4RYZPslOJVX8
+      parameters: []
       requestBody:
         content:
           multipart/form-data:
@@ -781,6 +759,4 @@ components:
         - msg
         - data
   securitySchemes: {}
-servers:
-  - url: http://localhost:10101
-    description: 开发环境
+servers: []
