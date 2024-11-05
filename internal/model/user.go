@@ -5,14 +5,23 @@ import (
 	"github.com/FIY-pc/user-manager/internal/tools"
 	"gorm.io/gorm"
 	"log"
+	"time"
+)
+
+const (
+	PermissionAdmin  = 2
+	PermissionUser   = 1
+	PermissionPublic = 0
 )
 
 type User struct {
-	gorm.Model
+	ID         uint   `json:"id" gorm:"primaryKey"`
 	Nickname   string `json:"name" `
 	Password   string `json:"password"`
 	Email      string `json:"email" gorm:"unique"`
 	Permission int    `json:"permission"`
+	CreatedAt  time.Time
+	UpdatedAt  time.Time
 }
 
 func GetUser(email string) (User, error) {

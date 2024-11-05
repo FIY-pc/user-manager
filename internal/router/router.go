@@ -11,11 +11,11 @@ func InitRouter(e *echo.Echo) {
 		return c.String(200, "Please use api")
 	})
 	// tokens
-	e.GET("/tokens", controller.Login())
+	e.GET("/tokens", controller.Login)
 	// users
-	e.POST("/users/register", controller.Register())
-	e.GET("/users", controller.GetUser())
-	e.POST("/users", controller.CreateUser())
-	e.PUT("/users", controller.UpdateUser())
-	e.DELETE("/users", controller.DeleteUser())
+	e.POST("/users/register", controller.Register)
+	e.GET("/users", controller.GetUser)
+	e.POST("/users", controller.CreateUser)
+	e.PUT("/users", controller.UpdateUser)
+	e.DELETE("/users", controller.DeleteUser)
 }

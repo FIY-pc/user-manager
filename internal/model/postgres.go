@@ -30,9 +30,9 @@ func InitAdmin() {
 			Nickname:   config.Config.User.InitAdmin.Nickname,
 			Email:      config.Config.User.InitAdmin.Email,
 			Password:   config.Config.User.InitAdmin.Password,
-			Permission: 2,
+			Permission: PermissionAdmin,
 		}
-		hashPassword, err := bcrypt.GenerateFromPassword([]byte(admin.Password), bcrypt.DefaultCost)
+		hashPassword, err := bcrypt.GenerateFromPassword([]byte(admin.Password), config.Config.Bcrypt.Cost)
 		if err != nil {
 			panic(err.Error())
 		}
