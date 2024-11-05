@@ -1,0 +1,27 @@
+{
+  "server": {
+    "host": "localhost",
+    "port": "10101"
+  },
+  "postgres": {
+    "dsn": ""
+  },
+  "jwt": {
+    "secret": "",
+    "exp": 3600
+  },
+  "bcrypt": {
+    "cost": 10
+  },
+  "user":  {
+    "init_admin": {
+      "nickname": "admin",
+      "email": "admin@EMAIL",
+      "password": "admin"
+    },
+    "nickname": {
+      "rand_min": 8,
+      "rand_max": 30
+    }
+  }
+}
