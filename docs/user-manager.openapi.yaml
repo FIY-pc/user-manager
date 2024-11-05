@@ -1,0 +1,786 @@
+openapi: 3.0.1
+info:
+  title: User-management-System
+  description: ''
+  version: 1.0.0
+tags:
+  - name: 权限等级-0
+  - name: 权限等级-2
+paths:
+  /tokens:
+    get:
+      summary: 登陆
+      deprecated: false
+      description: 权限等级0
+      tags:
+        - 权限等级-0
+      parameters:
+        - name: Authorization
+          in: header
+          description: ''
+          example: >-
+            Bearer
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2lvbiI6MiwiZXhwIjoxNzMwNzkxNTIyfQ.qifZf7X06lUrZpzijt1GfPyg9s9Y72M4RYZPslOJVX8
+          schema:
+            type: string
+            default: >-
+              Bearer
+              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2lvbiI6MiwiZXhwIjoxNzMwNzkxNTIyfQ.qifZf7X06lUrZpzijt1GfPyg9s9Y72M4RYZPslOJVX8
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                email:
+                  description: 邮箱
+                  example: '{{$internet.email}}'
+                  type: string
+                password:
+                  description: 密码
+                  example: '{{$string.alphanumeric(min=8,max=30)}}'
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    title: ''
+                    description: http状态码
+                  msg:
+                    type: string
+                    description: 信息
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        description: JWT令牌
+                      permission:
+                        type: number
+                        description: 权限等级
+                    required:
+                      - token
+                      - permission
+                required:
+                  - code
+                  - msg
+                  - data
+          headers: {}
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: ''
+                type: object
+                properties: {}
+          headers: {}
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: ''
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+  /users:
+    get:
+      summary: 获取用户信息
+      deprecated: false
+      description: 根据用户名进行查找，返回用户信息
+      tags:
+        - 权限等级-2
+      parameters:
+        - name: email
+          in: query
+          description: 邮箱
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: JWT令牌
+          required: false
+          example: ''
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    title: ''
+                    description: http状态码
+                  msg:
+                    type: string
+                    description: 响应信息
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: ID 编号
+                      nickname:
+                        type: string
+                        description: 用户昵称
+                      password:
+                        type: string
+                        title: ''
+                        description: 密码
+                      email:
+                        type: string
+                        title: ''
+                        description: 邮箱
+                      permission:
+                        type: string
+                        description: 权限等级
+                      CreateAt:
+                        type: string
+                        description: 创建时间
+                      UpdateAt:
+                        type: string
+                        description: 上次更新时间
+                      DeleteAt:
+                        type: string
+                        description: 删除时间
+                        nullable: true
+                    description: user信息
+                    required:
+                      - id
+                      - nickname
+                      - password
+                      - email
+                      - permission
+                      - CreateAt
+                      - UpdateAt
+                      - DeleteAt
+                    nullable: true
+                required:
+                  - code
+                  - msg
+                  - data
+          headers: {}
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: ''
+                type: object
+                properties: {}
+          headers: {}
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: ''
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+    post:
+      summary: 创建用户
+      deprecated: false
+      description: ''
+      tags:
+        - 权限等级-2
+      parameters:
+        - name: nickname
+          in: query
+          description: 用户昵称
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: 密码
+          required: true
+          example: '{{$string.alphanumeric(min=8,max=30)}}'
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: 邮箱
+          required: true
+          example: '{{$internet.email}}'
+          schema:
+            type: string
+        - name: permission
+          in: query
+          description: 权限等级
+          required: true
+          example: ''
+          schema:
+            type: string
+            enum:
+              - '0'
+              - '1'
+        - name: Authorization
+          in: header
+          description: JWT令牌
+          required: false
+          example: ''
+          schema:
+            type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties: {}
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    title: ''
+                    description: http状态码
+                  msg:
+                    type: string
+                    description: 响应信息
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: ID 编号
+                      nickname:
+                        type: string
+                        description: 用户昵称
+                      password:
+                        type: string
+                        title: ''
+                        description: 密码
+                      email:
+                        type: string
+                        title: ''
+                        description: 邮箱
+                      permission:
+                        type: string
+                        description: 权限等级
+                      CreateAt:
+                        type: string
+                        description: 创建时间
+                      UpdateAt:
+                        type: string
+                        description: 上次更新时间
+                      DeleteAt:
+                        type: string
+                        description: 删除时间
+                        nullable: true
+                    description: user信息
+                    required:
+                      - id
+                      - nickname
+                      - password
+                      - email
+                      - permission
+                      - CreateAt
+                      - UpdateAt
+                      - DeleteAt
+                    nullable: true
+                required:
+                  - code
+                  - msg
+                  - data
+          headers: {}
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: ''
+                type: object
+                properties: {}
+          headers: {}
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: ''
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+    put:
+      summary: 更新用户信息
+      deprecated: false
+      description: ''
+      tags:
+        - 权限等级-2
+      parameters:
+        - name: nickname
+          in: query
+          description: 用户昵称
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: 密码
+          required: false
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: 邮箱
+          required: true
+          schema:
+            type: string
+        - name: permission
+          in: query
+          description: 权限等级
+          required: false
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: JWT令牌
+          required: false
+          example: ''
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    title: ''
+                    description: http状态码
+                  msg:
+                    type: string
+                    description: 响应信息
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: ID 编号
+                      nickname:
+                        type: string
+                        description: 用户昵称
+                      password:
+                        type: string
+                        title: ''
+                        description: 密码
+                      email:
+                        type: string
+                        title: ''
+                        description: 邮箱
+                      permission:
+                        type: string
+                        description: 权限等级
+                      CreateAt:
+                        type: string
+                        description: 创建时间
+                      UpdateAt:
+                        type: string
+                        description: 上次更新时间
+                      DeleteAt:
+                        type: string
+                        description: 删除时间
+                        nullable: true
+                    description: user信息
+                    required:
+                      - id
+                      - nickname
+                      - password
+                      - email
+                      - permission
+                      - CreateAt
+                      - UpdateAt
+                      - DeleteAt
+                    nullable: true
+                required:
+                  - code
+                  - msg
+                  - data
+          headers: {}
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: ''
+                type: object
+                properties: {}
+          headers: {}
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: ''
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+    delete:
+      summary: 删除用户
+      deprecated: false
+      description: ''
+      tags:
+        - 权限等级-2
+      parameters:
+        - name: email
+          in: query
+          description: 邮箱
+          required: true
+          schema:
+            type: string
+        - name: Authorization
+          in: header
+          description: JWT令牌
+          required: false
+          example: ''
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    title: ''
+                    description: http状态码
+                  msg:
+                    type: string
+                    description: 响应信息
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: ID 编号
+                      nickname:
+                        type: string
+                        description: 用户昵称
+                      password:
+                        type: string
+                        title: ''
+                        description: 密码
+                      email:
+                        type: string
+                        title: ''
+                        description: 邮箱
+                      permission:
+                        type: string
+                        description: 权限等级
+                      CreateAt:
+                        type: string
+                        description: 创建时间
+                      UpdateAt:
+                        type: string
+                        description: 上次更新时间
+                      DeleteAt:
+                        type: string
+                        description: 删除时间
+                        nullable: true
+                    description: user信息
+                    required:
+                      - id
+                      - nickname
+                      - password
+                      - email
+                      - permission
+                      - CreateAt
+                      - UpdateAt
+                      - DeleteAt
+                    nullable: true
+                required:
+                  - code
+                  - msg
+                  - data
+          headers: {}
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: ''
+                type: object
+                properties: {}
+          headers: {}
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: ''
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+  /users/register:
+    post:
+      summary: 注册
+      deprecated: false
+      description: ''
+      tags:
+        - 权限等级-0
+      parameters:
+        - name: Authorization
+          in: header
+          description: ''
+          example: >-
+            Bearer
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2lvbiI6MiwiZXhwIjoxNzMwNzkxNTIyfQ.qifZf7X06lUrZpzijt1GfPyg9s9Y72M4RYZPslOJVX8
+          schema:
+            type: string
+            default: >-
+              Bearer
+              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicGVybWlzc2lvbiI6MiwiZXhwIjoxNzMwNzkxNTIyfQ.qifZf7X06lUrZpzijt1GfPyg9s9Y72M4RYZPslOJVX8
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                nickname:
+                  description: 用户昵称
+                  example: ''
+                  type: string
+                email:
+                  description: 邮箱
+                  example: '{{$internet.email}}'
+                  type: string
+                password:
+                  description: 密码
+                  example: '123456'
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    description: 状态码
+                  nickname:
+                    type: string
+                    description: 用户昵称
+                  msg:
+                    type: string
+                    description: 响应信息
+                required:
+                  - code
+                  - nickname
+                  - msg
+          headers: {}
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: ''
+                type: object
+                properties: {}
+          headers: {}
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                title: ''
+                type: object
+                properties: {}
+          headers: {}
+      security: []
+components:
+  schemas:
+    500错误响应:
+      type: object
+      properties:
+        code:
+          type: string
+          title: ''
+          description: http状态码
+        msg:
+          type: string
+          description: 概括信息
+        error:
+          type: string
+          description: 具体错误(服务端内部函数返回的错误信息)
+      required:
+        - code
+        - msg
+        - error
+    登陆200响应:
+      type: object
+      properties:
+        code:
+          type: string
+          title: ''
+          description: http状态码
+        msg:
+          type: string
+          description: 信息
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+              description: JWT令牌
+            permission:
+              type: number
+              description: 权限等级
+          required:
+            - token
+            - permission
+      required:
+        - code
+        - msg
+        - data
+    400错误响应:
+      type: object
+      properties:
+        code:
+          type: string
+          title: ''
+          description: http状态码
+        msg:
+          type: string
+          description: 概括信息
+        error:
+          type: string
+          description: 具体错误
+      required:
+        - code
+        - msg
+        - error
+    用户信息:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID 编号
+        nickname:
+          type: string
+          description: 用户昵称
+        password:
+          type: string
+          title: ''
+          description: 密码
+        email:
+          type: string
+          title: ''
+          description: 邮箱
+        permission:
+          type: string
+          description: 权限等级
+        CreateAt:
+          type: string
+          description: 创建时间
+        UpdateAt:
+          type: string
+          description: 上次更新时间
+        DeleteAt:
+          type: string
+          description: 删除时间
+          nullable: true
+      required:
+        - id
+        - nickname
+        - password
+        - email
+        - CreateAt
+        - UpdateAt
+        - DeleteAt
+        - permission
+    user200响应:
+      type: object
+      properties:
+        code:
+          type: string
+          title: ''
+          description: http状态码
+        msg:
+          type: string
+          description: 响应信息
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              description: ID 编号
+            nickname:
+              type: string
+              description: 用户昵称
+            password:
+              type: string
+              title: ''
+              description: 密码
+            email:
+              type: string
+              title: ''
+              description: 邮箱
+            permission:
+              type: string
+              description: 权限等级
+            CreateAt:
+              type: string
+              description: 创建时间
+            UpdateAt:
+              type: string
+              description: 上次更新时间
+            DeleteAt:
+              type: string
+              description: 删除时间
+              nullable: true
+          description: user信息
+          required:
+            - id
+            - nickname
+            - password
+            - email
+            - permission
+            - CreateAt
+            - UpdateAt
+            - DeleteAt
+          nullable: true
+      required:
+        - code
+        - msg
+        - data
+  securitySchemes: {}
+servers:
+  - url: http://localhost:10101
+    description: 开发环境
