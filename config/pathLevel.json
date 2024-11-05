@@ -1,0 +1,14 @@
+{
+  "/tokens": {
+    "GET": 0
+  },
+  "/users/register": {
+    "POST": 0
+  },
+  "/users": {
+    "GET": 2,
+    "POST": 2,
+    "PUT": 2,
+    "DELETE": 2
+  }
+}
